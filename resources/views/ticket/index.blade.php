@@ -53,7 +53,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @if($items->isEmpty())
+                                @if($tickets->isEmpty())
                                   <p> NO HAY REGISTROS </P>  
 
                                 @else    

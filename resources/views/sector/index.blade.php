@@ -46,7 +46,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @if($items->isEmpty())
+                                @if($sectors->isEmpty())
                                   <p> NO HAY REGISTROS </P>  
 
                                 @else     

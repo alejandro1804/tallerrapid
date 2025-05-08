@@ -52,7 +52,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @if($items->isEmpty())
+                                @if($providers->isEmpty())
                                   <p> NO HAY REGISTROS </P>  
 
                                 @else    

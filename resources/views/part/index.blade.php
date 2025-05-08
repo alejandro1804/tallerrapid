@@ -51,7 +51,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @if($items->isEmpty())
+                                @if($parts->isEmpty())
                                   <p> NO HAY REGISTROS </P>  
 
                                 @else    

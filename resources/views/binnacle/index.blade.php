@@ -49,7 +49,7 @@
 									</tr>
                                 </thead>
                                 <tbody>
-                                @if($items->isEmpty())
+                                @if($binnacles->isEmpty())
                                   <p> NO HAY REGISTROS </P>  
 
                                 @else    

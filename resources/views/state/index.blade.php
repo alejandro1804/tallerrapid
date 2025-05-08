@@ -42,7 +42,7 @@
                                     </tr>
                                 </thead>
                                 <tbody
-                                >@if($items->isEmpty())
+                                >@if($states->isEmpty())
                                   <p> NO HAY REGISTROS </P>  
 
                                 @else    
