@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use App\Models\Operator;
+use App\Models\Item;
 use App\Models\Binnacle;
 use Illuminate\Http\Request;
 use Laravel\Scout\Searchable;
@@ -21,14 +22,17 @@ class BinnacleController extends Controller
      */
     public function index()
     {
-         $operators = Operator::pluck('name','id');
+                 
          $tickets = Ticket::pluck('id','item_id');
-       //  $items = Items::pluck('id','name');
+         //$tickets = Ticket::with('item')->get();
+         $items = Item::pluck('id','name');
+         $operators = Operator::pluck('name','id');
 
         $binnacles = Binnacle::search(request('search'))->orderBy('created_at','DESC')->paginate(7);
+        
             
-        return view('binnacle.index', compact('binnacles','tickets','operators'))
-           ->with('i', (request()->input('page', 1) - 1) * $binnacles->perPage());
+        return view('binnacle.index', compact('binnacles','tickets','items','operators'))
+         ->with('i', (request()->input('page', 1) - 1) * $binnacles->perPage());
     }
 
     /**
@@ -53,14 +57,18 @@ class BinnacleController extends Controller
      */
     public function store(Request $request)
     {
+        //print_r ($request->input('ticket_id'));
+        //print_r($request->all());
+
         request()->validate(Binnacle::$rules);
-       // $datee = Carbon::now();
-        //$datee->toDateTimeString(); //muestra fecha y hora
-        //$request->merge(['timestamp'=>$datee]);
+       
         $binnacle = Binnacle::create($request->all());
 
+        
+
         return redirect()->route('binnacles.index')
-            ->with('success', 'Binnacle created successfully.');
+           ->with('success', 'Binnacle created successfully.');
+
     }
 
     /**
@@ -92,7 +100,7 @@ class BinnacleController extends Controller
         $operators = Operator::pluck('name','id');
         $tickets = Ticket::pluck('id');
         $binnacle = Binnacle::find($id);
-     // echo  ' ............        '. $binnacle ;
+        // echo  ' ............        '. $binnacle ;
         return view('binnacle.edit', compact('binnacle','operators','tickets'));
     }
 

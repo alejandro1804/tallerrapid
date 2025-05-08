@@ -49,14 +49,19 @@
 									</tr>
                                 </thead>
                                 <tbody>
+                                @if($items->isEmpty())
+                                  <p> NO HAY REGISTROS </P>  
+
+                                @else    
+                                    
                                     @foreach ($binnacles as $binnacle) 
                                             @php
                                                  ++$i;  
                                             @endphp
                                         <tr>
                                     		<td>{{ $binnacle->ticket_id }}</td>
-                                            <td>{{ $binnacle->ticket->item->name }}</td>
-											<td>{{ $binnacle->operator->name }}</td>
+                                            <td>{{  " " }}</td>
+											<td>{{ $binnacle->operator_id }}</td>
                                             <td>{{ $binnacle->created_at }}</td>
 										     <td>
                                                 <form action="{{ route('binnacles.destroy',$binnacle->id) }}" method="POST">
@@ -69,6 +74,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @endif
                                 </tbody>
                             </table>
                         </div>

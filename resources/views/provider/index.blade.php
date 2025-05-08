@@ -40,6 +40,7 @@
                                 <div>
                             </form>
                             <table class="table table-striped table-hover">
+                                  <p> NO HAY REGISTROS </P>  
                                 <thead class="thead">
                                     <tr>
                                       	<th>Name</th>
@@ -51,6 +52,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if($items->isEmpty())
+                                  <p> NO HAY REGISTROS </P>  
+
+                                @else    
                                     @foreach ($providers as $provider)  
                                             @php
                                                  ++$i;  
@@ -73,6 +78,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @endif    
                                 </tbody>
                             </table>
                         </div>

@@ -16,11 +16,11 @@
                                 {{ __('Personal') }}
                             </span>
                      
-                              <div class="float-right">
+                            <div class="float-right">
                                 <a href="{{ route('operators.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
                                   {{ __('Create New') }}
                                 </a>
-                              </div>
+                            </div>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -51,6 +51,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if($items->isEmpty())
+                                  <p> NO HAY REGISTROS </P>  
+
+                                @else    
+
                                     @foreach ($operators as $operator)
                                             @php
                                                  ++$i;  
@@ -72,6 +77,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @endif    
                                 </tbody>
                             </table>
                         </div>

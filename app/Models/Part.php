@@ -26,7 +26,7 @@ class Part extends Model
     use Searchable;
 
     static $rules = [
-		'item_id' => 'required',
+		'item_id' => 'required|exists:items,id',
 		'name' => 'required',
 		'note' => 'nullable',
 		'provider_id' => 'required',

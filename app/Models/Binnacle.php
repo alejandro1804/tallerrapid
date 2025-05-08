@@ -24,10 +24,10 @@ class Binnacle extends Model
 {
     use Searchable;
     
-    static $rules = [
-		'ticket_id' => 'required',
-		'operator_id' => 'required',
-		'note' => 'required',
+    static $rules = [ 
+        'ticket_id' => 'required|exists:tickets,id',
+		    'operator_id' => 'required|exists:operators,id',
+		    'note' => 'required',
     ];
 
     protected $perPage = 20;
@@ -37,7 +37,7 @@ class Binnacle extends Model
      *
      * @var array
      */
-    protected $fillable = ['ticket_id','operator_id','created_at','note'];
+    protected $fillable = ['ticket_id','item_id','operator_id','created_at','note'];
 
 
     /**
@@ -45,7 +45,8 @@ class Binnacle extends Model
      */
     public function operator()
     {
-        return $this->hasOne('App\Models\Operator', 'id', 'operator_id');
+       // return $this->belongsTo('App\Models\Operator', 'id', 'operator_id');
+        return $this->hasOne(Operator::class);
     }
     
     /**
@@ -53,8 +54,19 @@ class Binnacle extends Model
      */
     public function ticket()
     {
-        return $this->hasOne('App\Models\Ticket', 'id', 'ticket_id');
+      //  return $this->belongsTo('App\Models\Ticket', 'id', 'ticket_id');
+       return $this->hasOne(Ticket::class);
+
+
     }
+
+    public function item()
+    {
+
+        return $this->belongsTo('App\Models\Item', 'id','item_id');
+
+    }
+    /*
     public function toSearchableArray(): array
     {
         $array = $this->toArray();
@@ -66,7 +78,7 @@ class Binnacle extends Model
           //'item.name' =>' ',
         ];
 
-        return $array;
-    }
+        return $array; 
+    }   */
 
 }

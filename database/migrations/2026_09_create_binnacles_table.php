@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('binnacles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ticket_id');
-            $table->foreign('ticket_id')->references('id')->on('tickets');
+            $table->foreignId('ticket_id')->constrained();
             $table->unsignedBigInteger('operator_id');
-            $table->foreign('operator_id')->references('id')->on('operators');
+            $table->foreignId('operator_id')->constained();
             $table->string('note');
             $table->timestamps();
         });

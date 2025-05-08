@@ -52,6 +52,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                @if($items->isEmpty())
+                                  <p> NO HAY REGISTROS </P>  
+
+                                @else    
+
                                     @foreach ($items as $item)
                                          @php
                                                  ++$i;  
@@ -75,6 +81,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @endif    
                                 </tbody>
                             </table>
                         </div>

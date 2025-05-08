@@ -26,7 +26,7 @@
                         </div>
                          
                         <div class="form-group">
-                            <strong>Ticket Id:</strong>
+                            <strong>Item:</strong>
                             {{ $binnacle->ticket->item->name }}
                         </div>
                         <div class="form-group">

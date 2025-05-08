@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('state_id');
-            $table->foreign('state_id')->references('id')->on('states');
-            $table->timestamp('timestamp');
+            $table->foreignId('state_id')->constrained();
+            $table->timestamp('admission');
             $table->unsignedBigInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreignId('item_id')->constrained();
             $table->string('flaw');
             $table->integer('priority');
             $table->timestamps();

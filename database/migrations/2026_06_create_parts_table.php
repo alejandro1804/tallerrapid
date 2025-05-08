@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('parts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id');
-            $table->foreign('item_id')->references('id')->on('items');
-            
+            $table->foreignId('item_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('note');
 
             $table->unsignedBigInteger('provider_id');
-            $table->foreign('provider_id')->references('id')->on('providers');
+            $table->foreignId('provider_id')->constrained();
 
 
             $table->timestamps();

@@ -3,12 +3,16 @@
         
         <div class="form-group">
             {{ Form::label('ticket_id') }}
-            {{ Form::select('ticket_id',$tickets ,$binnacle->ticket_id, ['class' => 'form-control' . ($errors->has('ticket_id') ? ' is-invalid' : ''), 'placeholder' => 'Ticket Id']) }}
+            {{ Form::select('ticket_id', $tickets , $binnacle->ticket_id, 
+                 ['class' => 'form-control' . ($errors->has('ticket_id') ? ' is-invalid' : ''), 
+                 'placeholder' => 'ticket Id']) }}
             {!! $errors->first('ticket_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">
             {{ Form::label('operator_id') }}
-            {{ Form::select('operator_id', $operators ,$binnacle->operator_id, ['class' => 'form-control' . ($errors->has('operator_id') ? ' is-invalid' : ''), 'placeholder' => 'Operator Id']) }}
+            {{ Form::select('operator_id', $operators , $binnacle->operator_id,
+                 ['class' => 'form-control' . ($errors->has('operator_id') ? ' is-invalid' : ''),
+                  'placeholder' => 'Operator Id']) }}
             {!! $errors->first('operator_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
         <div class="form-group">

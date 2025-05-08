@@ -25,7 +25,7 @@ class Operator extends Model
     use Searchable;
     
     static $rules = [
-		'name' => 'required','unique',
+		'name' => 'required',
 		'position_id' => 'required',
         'phone' => 'numeric|required',
 		'status' => 'nullable',
@@ -54,6 +54,7 @@ class Operator extends Model
         return $this->hasOne('App\Models\Position', 'id', 'position_id');
     } 
 
+   
     public function toSearchableArray(): array
     {
         $array = $this->toArray();

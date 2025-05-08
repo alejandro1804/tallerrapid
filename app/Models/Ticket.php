@@ -50,7 +50,7 @@ class Ticket extends Model
      */
     public function binnacles()
     {
-        return $this->hasMany('App\Models\Binnacle', 'ticket_id', 'id');
+        return $this->hasMany('App\Models\Binnacle','id' ,'ticket_id');
     }
     
     /**
@@ -58,8 +58,10 @@ class Ticket extends Model
      */
     public function item()
     {
-        return $this->hasOne('App\Models\Item', 'id', 'item_id');
+        return $this->belongTo('App\Models\Item', 'id', 'item_id');
     }
+     
+   
      /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

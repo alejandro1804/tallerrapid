@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('position_id');
-            $table->foreign('position_id')->references('id')->on('positions');
+            $table->foreignId('position_id')->constrained();
             $table->string('phone');
             $table->string('status');
             $table->timestamps();

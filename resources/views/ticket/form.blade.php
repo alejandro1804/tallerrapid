@@ -11,7 +11,7 @@
           
         </div>
         <div class="form-group">
-            {{ Form::label('item_id') }}
+            {{ Form::label('item') }}
             {{ Form::select('item_id',$items, $ticket->item_id, ['class' => 'form-control' . ($errors->has('item_id') ? ' is-invalid' : ''), 'placeholder' => 'Item Id']) }}
             {!! $errors->first('item_id', '<div class="invalid-feedback">:message</div>') !!}
         </div>
