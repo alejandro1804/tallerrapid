@@ -59,6 +59,9 @@ class PartController extends Controller
      */
     public function store(Request $request)
     {
+        $nota = $request->input('note');
+        if ($nota==NULL){   $request->merge(['note'=>' sin comentarios ']);                              }
+
         request()->validate(Part::$rules);
 
         $part = Part::create($request->all());

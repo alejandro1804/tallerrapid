@@ -14,7 +14,9 @@ use App\Mail\TestMail;
  */
 class ProviderController extends Controller
 {
+    use Searchable;
     /**
+     * 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -54,7 +56,7 @@ class ProviderController extends Controller
         request()->validate(Provider::$rules);
         $provider = Provider::create($request->all());
 
-        Mail::to("danielabarizo@gmail.com")->send(new TestMail("Daniela")); 
+      //  Mail::to("danielabarizo@gmail.com")->send(new TestMail("Daniela")); 
 
 
 

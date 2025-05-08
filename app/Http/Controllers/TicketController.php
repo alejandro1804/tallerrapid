@@ -71,7 +71,7 @@ class TicketController extends Controller
         $date = Carbon::now();
         $date->toDateTimeString(); //muestra fecha y hora
         
-        $request->merge(['admission'=>$date]);
+       // $request->merge(['admission'=>$date]);
 
         $ticket = Ticket::create($request->all());
 
