@@ -58,7 +58,11 @@ class Ticket extends Model
      */
     public function item()
     {
+<<<<<<< HEAD
         return $this->belongTo('App\Models\Item', 'id', 'item_id');
+=======
+        return $this->belongsTo('App\Models\Item', 'id', 'item_id');
+>>>>>>> 91d0cd969fd99c7161265ff38ea53e555e97969c
     }
      
    
