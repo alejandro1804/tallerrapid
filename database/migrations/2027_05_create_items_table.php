@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('binnacles', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ticket_id');
-            $table->foreignId('ticket_id')->constrained();
-            $table->unsignedBigInteger('operator_id');
-            $table->foreignId('operator_id')->constained();
+            $table->string('name');
+            $table->foreignId('sector_id')->constrained();
+            $table->string('characteristic');
             $table->string('note');
+            $table->string('trademark');
+            $table->foreignId('provider_id')->constrained();
+
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('binnacles');
+        Schema::dropIfExists('items');
     }
 };

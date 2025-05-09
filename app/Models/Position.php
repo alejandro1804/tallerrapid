@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
+
 
 /**
  * Class Position
@@ -16,9 +18,13 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Position extends Model
-{
+{ 
+
+   use Searchable;
+  protected $table = 'positions';
+  protected $primaryKey = 'id'; // Asegúrate de que esto coincida con la columna en la BD
     
-    static $rules = [
+  static $rules = [
 		'name' => 'required',
     ];
 

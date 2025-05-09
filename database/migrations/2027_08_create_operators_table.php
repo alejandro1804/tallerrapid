@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('operators', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedBigInteger('position_id');
             $table->foreignId('position_id')->constrained();
             $table->string('phone');
             $table->string('status');

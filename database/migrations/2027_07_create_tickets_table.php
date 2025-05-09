@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('parts', function (Blueprint $table) {
+        Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('item_id');
-            $table->foreignId('item_id')->constrained()->onDelete('cascade');
-            $table->string('name');
-            $table->string('note');
-
-            $table->unsignedBigInteger('provider_id');
-            $table->foreignId('provider_id')->constrained();
-
-
+            $table->foreignId('state_id')->constrained();
+            $table->timestamp('admission');
+            $table->foreignId('item_id')->constrained();
+            $table->string('flaw');
+            $table->integer('priority');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('parts');
+        Schema::dropIfExists('tickets');
     }
 };

@@ -23,7 +23,18 @@ class OperatorController extends Controller
     public function index()
     {
         $positions = Position::pluck('name','id');
-        $operators = Operator::search(request('search'))->orderBy('name','ASC')->paginate(7);
+    //    $operators = Operator::with('position')->search(request('search'))->orderBy('name', 'ASC')
+      //  ->paginate(7);
+
+
+    $operators = Operator::with('position')
+    ->where('name', 'LIKE', '%' . request('search') . '%')
+    ->orderBy('name', 'ASC')->paginate(7);
+
+
+
+
+       // $operators = Operator::search(request('search'))->orderBy('name','ASC')->paginate(7);
         
         return view('operator.index', compact('operators','positions'))
             ->with('i', (request()->input('page', 1) - 1) * $operators->perPage());

@@ -51,7 +51,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @if($items->isEmpty())
+                                @if($operators->isEmpty())
                                   <p> NO HAY REGISTROS </P>  
 
                                 @else    
@@ -63,7 +63,7 @@
                                                                        
                                         <tr>
                                             <td>{{ $operator->name }}</td>
-											<td>{{ $operator->position_id }}</td>
+											<td>{{ $operator->position->name ?? 'Sin posición' }}</td>
                                             <td>{{ $operator->phone }}</td>
 											<td>{{ $operator->status }}</td>
                                             <td>
