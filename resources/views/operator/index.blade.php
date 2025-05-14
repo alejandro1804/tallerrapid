@@ -63,7 +63,7 @@
                                                                        
                                         <tr>
                                             <td>{{ $operator->name }}</td>
-											<td>{{ $operator->position->name ?? 'Sin posición' }}</td>
+											<td>{{ $operator->position_id ?? 'Sin posición' }}</td>
                                             <td>{{ $operator->phone }}</td>
 											<td>{{ $operator->status }}</td>
                                             <td>
