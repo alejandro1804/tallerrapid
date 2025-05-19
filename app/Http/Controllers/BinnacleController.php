@@ -44,13 +44,13 @@ class BinnacleController extends Controller
     {
        
       //  $tickets = Ticket::pluck('id');
-        $tickets = Ticket::pluck( 'id')->toArray();
+        $tickets = Ticket::pluck('id','id')->toArray();
         $operators = Operator::pluck('name','id');
         
         $binnacle = new Binnacle();
 
-    // dd($tickets);
-    // dd($tickets->toArray());
+     //dd($tickets);
+     //dd($tickets->toArray());
         return view('binnacle.create', compact('binnacle','operators','tickets'));
     }
 
@@ -62,21 +62,21 @@ class BinnacleController extends Controller
      */
     public function store(Request $request)
     {
-        //print_r ($request->input('ticket_id'));
+        print_r ($request->input('ticket_id'));
         //print_r($request->all());
 
 
 
         request()->validate(Binnacle::$rules);
        
-       // $binnacle = Binnacle::create($request->all());
+       $binnacle = Binnacle::create($request->all());
 
     //S  dd(Ticket::find($request->ticket_id));  
 
        //dd($request->ticket_id);
-       dd($request->all());
-     //   return redirect()->route('binnacles.index')
-     //    ->with('success', 'Binnacle created successfully.');
+     //  dd($request->all());
+        return redirect()->route('binnacles.index')
+         ->with('success', 'Binnacle created successfully.');
 
     }
         

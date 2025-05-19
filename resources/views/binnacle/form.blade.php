@@ -3,7 +3,7 @@
         
         <div class="form-group">
             {{ Form::label('ticket_id') }}
-            {{ Form::select('ticket_id', $tickets , $binnacle->ticket_id, 
+            {{ Form::select('ticket_id', $tickets , $binnacle->ticket_id  ?? null , 
                  ['class' => 'form-control' . ($errors->has('ticket_id') ? ' is-invalid' : ''), 
                  'placeholder' => 'ticket Id']) }}
             {!! $errors->first('ticket_id', '<div class="invalid-feedback">:message</div>') !!}
@@ -23,5 +23,6 @@
      </div>
     <div class="box-footer mt20">
         <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+        
     </div>
 </div>
