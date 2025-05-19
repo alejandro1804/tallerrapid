@@ -25,8 +25,8 @@ class Binnacle extends Model
     use Searchable;
     
     static $rules = [ 
-        'ticket_id' => 'required|exists:tickets,id',
-		    'operator_id' => 'required|exists:operators,id',
+           // 'ticket_id' => 'required|exists:tickets,id',
+		   // 'operator_id' => 'required|exists:operators,id',
 		    'note' => 'required',
     ];
 
@@ -55,7 +55,7 @@ class Binnacle extends Model
     public function ticket()
     {
       //  return $this->belongsTo('App\Models\Ticket', 'id', 'ticket_id');
-       return $this->hasOne(Ticket::class);
+       return $this->belongsTo(Ticket::class);
 
 
     }

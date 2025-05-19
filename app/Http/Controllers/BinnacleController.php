@@ -23,7 +23,7 @@ class BinnacleController extends Controller
     public function index()
     {
                  
-         $tickets = Ticket::pluck('id','item_id');
+         $tickets = Ticket::pluck('id','item_id')->toArray();
          //$tickets = Ticket::with('item')->get();
          $items = Item::pluck('id','name');
          $operators = Operator::pluck('name','id');
@@ -42,11 +42,16 @@ class BinnacleController extends Controller
      */
     public function create()
     {
+       
+      //  $tickets = Ticket::pluck('id');
+        $tickets = Ticket::pluck( 'id')->toArray();
         $operators = Operator::pluck('name','id');
-        $tickets = Ticket::pluck('id');
+        
         $binnacle = new Binnacle();
-        return view('binnacle.create', compact('binnacle','operators','tickets'));
 
+    // dd($tickets);
+    // dd($tickets->toArray());
+        return view('binnacle.create', compact('binnacle','operators','tickets'));
     }
 
     /**
@@ -60,17 +65,21 @@ class BinnacleController extends Controller
         //print_r ($request->input('ticket_id'));
         //print_r($request->all());
 
+
+
         request()->validate(Binnacle::$rules);
        
-        $binnacle = Binnacle::create($request->all());
+       // $binnacle = Binnacle::create($request->all());
 
-        
+    //S  dd(Ticket::find($request->ticket_id));  
 
-        return redirect()->route('binnacles.index')
-           ->with('success', 'Binnacle created successfully.');
+       //dd($request->ticket_id);
+       dd($request->all());
+     //   return redirect()->route('binnacles.index')
+     //    ->with('success', 'Binnacle created successfully.');
 
     }
-
+        
     /**
      * Display the specified resource.
      *

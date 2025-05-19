@@ -24,9 +24,9 @@ class OperatorController extends Controller
     {
         $positions = Position::pluck('name','id');
         $operators = Operator::search(request('search'))->orderBy('name','ASC')->paginate(7);
-        
+      //  $operators = Operator::with ('position')->get();
         return view('operator.index', compact('operators','positions'))
-            ->with('i', (request()->input('page', 1) - 1) * $operators->perPage());
+           ->with('i', (request()->input('page', 1) - 1) * $operators->perPage());
     }
 
     /**

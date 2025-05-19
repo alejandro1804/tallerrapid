@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('binnacles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ticket_id')->constrained();
+            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
             $table->foreignId('operator_id')->constained();
             $table->string('note');
             $table->timestamps();

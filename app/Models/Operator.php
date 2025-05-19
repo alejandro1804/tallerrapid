@@ -49,10 +49,12 @@ class Operator extends Model
         return $this->hasMany('App\Models\Binnacle', 'id', 'operator_id');
     }
     
-       public function positions()
+       public function position()
     {
-        return $this->hasOne('App\Models\Position', 'id', 'position_id');
-    } 
+       // return $this->belongsTo('App\Models\Position', 'id', 'position_id');
+        return $this->belongsTo(Position::class, 'position_id');
+    }
+
 
    
     public function toSearchableArray(): array
