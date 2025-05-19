@@ -25,6 +25,10 @@ class BinnacleController extends Controller
                  
          $tickets = Ticket::pluck('id','item_id')->toArray();
          //$tickets = Ticket::with('item')->get();
+     //    $tickets = Ticket::with('item')->get()->mapWithKeys(function ($ticket) {
+       //     return [$ticket->id => $ticket->item->name ?? 'Sin Item'];
+      //  });
+
          $items = Item::pluck('id','name');
          $operators = Operator::pluck('name','id');
 

@@ -60,8 +60,8 @@
                                             @endphp
                                         <tr>
                                     		<td>{{ $binnacle->ticket_id }}</td>
-                                            <td>{{  " " }}</td>
-											<td>{{ $binnacle->operator_id }}</td>
+                                            <td>{{ $binnacle->note}}</td>
+											<td>{{ $binnacle->operator->name }}</td>
                                             <td>{{ $binnacle->created_at }}</td>
 										     <td>
                                                 <form action="{{ route('binnacles.destroy',$binnacle->id) }}" method="POST">

@@ -63,8 +63,8 @@ class Binnacle extends Model
     public function item()
     {
 
-        return $this->belongsTo('App\Models\Item', 'id','item_id');
-
+       // return $this->belongsTo('App\Models\Item', 'id','item_id');
+            
     }
     /*
     public function toSearchableArray(): array
