@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\Ticket;
+use App\Models\Binnacle;
 use App\Models\Operator;
 use App\Models\State;
 use Illuminate\Http\Request;
@@ -24,6 +25,15 @@ class TicketController extends Controller
     {
         $states = State::pluck('name','id');
         $items = Item::pluck('name','id');
+       // $items = Item::with('item')->get();
+     //   $tickets = Ticket::with('item')->get()->mapWithKeys(function ($ticket) {
+       //     return [$ticket->id => $ticket->item->name ?? 'Sin Item'];
+       // });
+
+
+       
+
+
         $tickets = Ticket::search(request('search'))->orderBy('id','DES')->paginate(7);
 
        // $tickets = Ticket::search(request('search'))->where('state_id','2')->orderBy('id','DES')-> paginate(7);
@@ -44,6 +54,8 @@ class TicketController extends Controller
              ->with('i', (request()->input('page', 1) - 1) * $tickets->perPage());
 
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

@@ -20,30 +20,18 @@ class BinnacleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-                 
-         $tickets = Ticket::pluck('id','item_id')->toArray();
-         //$tickets = Ticket::with('item')->get();
-     //    $tickets = Ticket::with('item')->get()->mapWithKeys(function ($ticket) {
-       //     return [$ticket->id => $ticket->item->name ?? 'Sin Item'];
-      //  });
+        $id = request('id'); // Obtiene el id desde la query string
+        $tickets = Ticket::with('item')->findOrFail($id);
+        $operators = Operator::pluck('name', 'id');
+        $binnacles = Binnacle::where('ticket_id', $id)->paginate(7);
 
-         $items = Item::pluck('id','name');
-         $operators = Operator::pluck('name','id');
-
-        $binnacles = Binnacle::search(request('search'))->orderBy('created_at','DESC')->paginate(7);
-        
-            
-        return view('binnacle.index', compact('binnacles','tickets','items','operators'))
-         ->with('i', (request()->input('page', 1) - 1) * $binnacles->perPage());
+        return view('binnacle.index', compact('binnacles', 'tickets', 'operators'))
+            ->with('i', (request()->input('page', 1) - 1) * $binnacles->perPage());
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
        
@@ -95,10 +83,7 @@ class BinnacleController extends Controller
         $operators = Operator::pluck('name','id');
         $tickets = Ticket::pluck('id');
         $binnacle = Binnacle::find($id);
-
-       // echo  ' ............        '. $binnacle ;
-
-
+       
         return view('binnacle.show', compact('binnacle','operators','tickets'));
     }
 

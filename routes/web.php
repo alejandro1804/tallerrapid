@@ -26,7 +26,7 @@ Route::get('/', function () {
     return view('layouts.app');
 });
 
-Auth::routes();
+//Auth::routes();
 
 
 Route::resource('states',StateController::class);             //->middleware('Auth');

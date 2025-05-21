@@ -75,7 +75,8 @@
                                                 <form action="{{ route('tickets.destroy',$ticket->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('tickets.show',$ticket->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Ver') }}</a>
                                                     <a class="btn btn-sm btn-success" href="{{ route('tickets.edit',$ticket->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    <!-- a class="btn btn-sm btn-success" href="{{ route('binnacles.index',$ticket->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Bitacora') }}</a> -->
+                                                    <a class="btn btn-sm btn-success" href="{{ route('binnacles.index',['id' => $ticket->id]) }}"><i class="fa fa-fw fa-edit"></i>{{ __('Bitacora') }}</a>
+
 
                                                     @csrf
                                                     @method('DELETE')

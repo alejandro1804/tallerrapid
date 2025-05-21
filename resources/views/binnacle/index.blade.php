@@ -60,7 +60,7 @@
                                             @endphp
                                         <tr>
                                     		<td>{{ $binnacle->ticket_id }}</td>
-                                            <td>{{ $binnacle->note}}</td>
+                                            <td>{{ $binnacle->ticket->item->name}}</td>
 											<td>{{ $binnacle->operator->name }}</td>
                                             <td>{{ $binnacle->created_at }}</td>
 										     <td>

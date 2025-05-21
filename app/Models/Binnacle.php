@@ -46,7 +46,7 @@ class Binnacle extends Model
     public function operator()
     {
        // return $this->belongsTo('App\Models\Operator', 'id', 'operator_id');
-        return $this->hasOne(Operator::class);
+        return $this->belongsTo(Operator::class);
     }
     
     /**
@@ -59,13 +59,7 @@ class Binnacle extends Model
 
 
     }
-
-    public function item()
-    {
-
-       // return $this->belongsTo('App\Models\Item', 'id','item_id');
-            
-    }
+   
     /*
     public function toSearchableArray(): array
     {
