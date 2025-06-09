@@ -14,7 +14,7 @@
                             <span class="card-title">{{ __('Show') }} Binnacle</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary" href="{{ route('binnacles.index') }}"> {{ __('Back') }}</a>
+                            <a class="btn btn-primary" href="{{ route('binnacles.index',['id' => $binnacle->ticket_id]) }}"> {{ __('Back') }}</a>
                         </div>
                     </div>
 

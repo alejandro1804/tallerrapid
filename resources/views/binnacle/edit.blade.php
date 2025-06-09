@@ -16,7 +16,7 @@
                         <span class="card-title">{{ __('Update') }} Binnacle</span>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('binnacles.update', $binnacle->id) }}"  role="form" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('binnacles.update',['id'=> $binnacle->id,'ticket_id'=>$binnacle->ticket_id]) }}"  role="form" enctype="multipart/form-data">
                             {{ method_field('PATCH') }}
                             @csrf
 

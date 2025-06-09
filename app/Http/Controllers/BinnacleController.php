@@ -23,27 +23,26 @@ class BinnacleController extends Controller
 
     public function index()
     {
-        $id = request('id'); // Obtiene el id desde la query string
-        $tickets = Ticket::with('item')->findOrFail($id);
+        $ticket_id = request('id'); // Obtiene el id del ticket
+        
+        $tickets = Ticket::with('item')->findOrFail($ticket_id);
         $operators = Operator::pluck('name', 'id');
-        $binnacles = Binnacle::where('ticket_id', $id)->paginate(7);
+        $binnacles = Binnacle::where('ticket_id', $ticket_id)->paginate(7);
 
-        return view('binnacle.index', compact('binnacles', 'tickets', 'operators'))
+        return view('binnacle.index', compact('binnacles', 'tickets', 'operators','ticket_id'))
             ->with('i', (request()->input('page', 1) - 1) * $binnacles->perPage());
     }
     
     public function create()
     {
-       
-      //  $tickets = Ticket::pluck('id');
+        
         $tickets = Ticket::pluck('id','id')->toArray();
         $operators = Operator::pluck('name','id');
-        
         $binnacle = new Binnacle();
+      
+        $modo = "CREAR";
 
-     //dd($tickets);
-     //dd($tickets->toArray());
-        return view('binnacle.create', compact('binnacle','operators','tickets'));
+        return view('binnacle.create', compact('binnacle','operators','tickets','modo'));
     }
 
     /**
@@ -54,20 +53,19 @@ class BinnacleController extends Controller
      */
     public function store(Request $request)
     {
-        print_r ($request->input('ticket_id'));
-        //print_r($request->all());
+    
+       // print_r($request->all());
+
+        $identificador = $request->input('ticket_id');
 
 
-
+      
         request()->validate(Binnacle::$rules);
-       
-       $binnacle = Binnacle::create($request->all());
+        $binnacle = Binnacle::create($request->all());
 
-    //S  dd(Ticket::find($request->ticket_id));  
+      //dd(Ticket::find($request->ticket_id));  
 
-       //dd($request->ticket_id);
-     //  dd($request->all());
-        return redirect()->route('binnacles.index')
+        return redirect()->route('binnacles.index',['id' => $identificador])
          ->with('success', 'Binnacle created successfully.');
 
     }
@@ -98,7 +96,8 @@ class BinnacleController extends Controller
         $operators = Operator::pluck('name','id');
         $tickets = Ticket::pluck('id');
         $binnacle = Binnacle::find($id);
-        // echo  ' ............        '. $binnacle ;
+       // echo 'en function edit : ' .$binnacle->ticket_id;
+        
         return view('binnacle.edit', compact('binnacle','operators','tickets'));
     }
 
@@ -115,9 +114,15 @@ class BinnacleController extends Controller
        // $date = Carbon::now();
        // $date->toDateTimeString(); //muestra fecha y hora
        // $request->merge(['timestamp'=>$date]);
+       //echo "identificador en function update : " . $identificador = $request->input('ticket_id');
+   // echo $request->all();
+
         $binnacle->update($request->all());
 
-        return redirect()->route('binnacles.index')
+      // echo $identificador = $request->input('ticket_id'); // Obtiene el id del ticket
+
+
+        return redirect()->route('binnacles.index',['id' => $identificador])
             ->with('success', 'Binnacle updated successfully');
     }
 
@@ -128,9 +133,11 @@ class BinnacleController extends Controller
      */
     public function destroy($id)
     {
+       // echo $identificador = $request->input('ticket_id'); 
+
         $binnacle = Binnacle::find($id)->delete();
 
-        return redirect()->route('binnacles.index')
+        return redirect()->route('binnacles.index',$id)
             ->with('success', 'Binnacle deleted successfully');
     }
 }
