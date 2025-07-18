@@ -133,11 +133,9 @@ class BinnacleController extends Controller
      */
     public function destroy($id)
     {
-       // echo $identificador = $request->input('ticket_id'); 
-
+     
         $binnacle = Binnacle::find($id)->delete();
+        return redirect()->back()->with('success', 'Binnacle eliminado exitosamente');
 
-        return redirect()->route('binnacles.index',$id)
-            ->with('success', 'Binnacle deleted successfully');
     }
 }
