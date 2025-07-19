@@ -21,41 +21,53 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+  /*  public function index()
     {
         $states = State::pluck('name','id');
         $items = Item::pluck('name','id');
-       // $items = Item::with('item')->get();
-     //   $tickets = Ticket::with('item')->get()->mapWithKeys(function ($ticket) {
-       //     return [$ticket->id => $ticket->item->name ?? 'Sin Item'];
-       // });
-
-
-       
-
-
         $tickets = Ticket::search(request('search'))->orderBy('id','DES')->paginate(7);
-
-       // $tickets = Ticket::search(request('search'))->where('state_id','2')->orderBy('id','DES')-> paginate(7);
+               
        
         $cantidad   = 'Total emitidos   '. Ticket::count() .'______   ';
         $finalizado = 'Total finalizados    '. Ticket::where('state_id' , 2)->count().'    ';
      
-      
-     //   echo  'Este es el resultado de Ticket::find(3)  ' .  Ticket::find(3) . '..........';
-
-     //   echo 'Este es el resultado de Ticket::all() '  . Ticket::all() . '...........';
-
-      //  echo ' Este el es resultado de  Ticket::where(priority , 5)->get()  ' .      Ticket::where('priority','5')->get();
-
-     // echo '            ' . Ticket::orderBy('admission','DESC')->get();
-
         return view('ticket.index', compact('states','tickets','items','cantidad','finalizado'))
              ->with('i', (request()->input('page', 1) - 1) * $tickets->perPage());
 
+    } */
+   public function index(Request $request)
+{
+    $search = $request->get('search');
+    $estados = $request->get('estado', []); // Checkboxes seleccionados
+
+    $states = State::pluck('name','id');
+    $items = Item::pluck('name','id');
+
+    // Construcción dinámica de la query
+    $query = Ticket::with(['state', 'item'])->orderBy('id', 'DESC');
+
+    if ($search) {
+        $query->search($search); // si tu modelo usa Laravel Scout o un scope personalizado
     }
 
-    
+    if (!empty($estados)) {
+        $query->whereHas('state', function ($q) use ($estados) {
+            $q->whereIn('name', $estados);
+        });
+    }
+
+    $tickets = $query->paginate(7);
+
+    // Contadores
+    $cantidad = 'Total emitidos   ' . Ticket::count() . '______   ';
+    $finalizado = 'Total finalizados    ' . Ticket::where('state_id', 2)->count() . '    ';
+
+    return view('ticket.index', compact('states','tickets','items','cantidad','finalizado'))
+        ->with('i', (request()->input('page', 1) - 1) * $tickets->perPage());
+} 
+
+
+ 
 
     /**
      * Show the form for creating a new resource.

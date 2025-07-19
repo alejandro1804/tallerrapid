@@ -31,6 +31,27 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
+                            <form method="get" class="mb-3">
+                                <div class="form-group d-flex align-items-center">
+                                    <label class="mr-2">
+                                        <input type="checkbox" name="estado[]" value="NUEVO" {{ in_array('NUEVO', request()->get('estado', [])) ? 'checked' : '' }}>
+                                        NUEVO
+                                    </label>
+                                    <label class="mx-2">
+                                        <input type="checkbox" name="estado[]" value="EN EJECUCION" {{ in_array('EN EJECUCION', request()->get('estado', [])) ? 'checked' : '' }}>
+                                        EN EJECUCION
+                                    </label>
+                                    <label class="mx-2">
+                                        <input type="checkbox" name="estado[]" value="CERRADO" {{ in_array('CERRADO', request()->get('estado', [])) ? 'checked' : '' }}>
+                                        CERRADO
+                                    </label>
+
+                                    <button class="btn btn-primary ml-3" type="submit">Filtrar</button>
+                                </div>
+                            </form>
+                        </div>
+
+
                             <form method="get">
                                 <div class="float-right">
                                     <input type="text" name="search" value="{{ request()->get('search')}}" class="form-control"
