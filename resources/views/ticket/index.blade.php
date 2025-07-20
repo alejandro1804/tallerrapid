@@ -45,6 +45,14 @@
                                         <input type="checkbox" name="estado[]" value="CERRADO" {{ in_array('CERRADO', request()->get('estado', [])) ? 'checked' : '' }}>
                                         CERRADO
                                     </label>
+                                    <label class="mx-2">Desde:
+                                        <input type="date" name="fecha_inicio" value="{{ request('fecha_inicio') }}">
+                                    </label>
+                                    <label class="mx-2">Hasta:
+                                        <input type="date" name="fecha_fin" value="{{ request('fecha_fin') }}">
+                                    </label>
+
+
 
                                     <button class="btn btn-primary ml-3" type="submit">Filtrar</button>
                                 </div>
@@ -59,6 +67,10 @@
                                      <button class="btn btn-success" type="submit" id="button-addon2">Search</button>       
 
                                 <div>
+                                    <a href="{{ route('tickets.export.pdf') }}" class="btn btn-primary">
+                                         Exportar PDF
+                                    </a>   
+
                             </form>
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
@@ -113,6 +125,7 @@
                     </div>
                 </div>
                 {!! $tickets->links() !!}
+                {{ $tickets->appends(request()->query())->links() }}
             </div>
         </div>
     </div>

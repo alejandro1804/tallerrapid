@@ -39,7 +39,8 @@ Route::resource('parts',PartController::class);               //->middleware('Au
 Route::resource('tickets',TicketController::class);           //->middleware('Auth');
 Route::resource('binnacles',BinnacleController::class);       //->middleware('Auth');
 
-//Route::get('/state.index', [App\Http\Controllers|\StateController::class, 'index'])->name('state.index');
-//Route::resource('')
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/tickets/export-pdf', [TicketController::class, 'exportTicketsPDF'])->name('tickets.export.pdf');
