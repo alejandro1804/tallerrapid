@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Laravel\Scout\Searchable;
 use TCPDF;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
+
+
 
 /**
  * Class TicketController
@@ -23,51 +27,46 @@ class TicketController extends Controller
      * @return \Illuminate\Http\Response
      */
   
+    public function index(Request $request)
+    {
+        $search = $request->get('search');
+        $estados = $request->get('estado', []); // Checkboxes seleccionados
 
+        $fechaInicio = $request->get('fecha_inicio');
+        $fechaFin = $request->get('fecha_fin');
 
+        $states = State::pluck('name','id');
+        $items = Item::pluck('name','id');
 
+        // Construcción dinámica de la query
+        $query = Ticket::with(['state', 'item'])->orderBy('id', 'DESC');
 
-   public function index(Request $request)
-{
-    $search = $request->get('search');
-    $estados = $request->get('estado', []); // Checkboxes seleccionados
+        if ($search) {
+            $query->where('id', 'like', '%' . $search . '%'); // asegurate de usar el campo correcto
+        }
+    
+        if (!empty($estados)) {
+            $query->whereHas('state', function ($q) use ($estados) {
+                $q->whereIn('name', $estados);
+            });
+        }
+        if ($fechaInicio && $fechaFin) {
+            $query->whereBetween('admission', [$fechaInicio, $fechaFin]);
+        } elseif ($fechaInicio) {
+            $query->whereDate('admission', '>=', $fechaInicio);
+        } elseif ($fechaFin) {
+            $query->whereDate('admission', '<=', $fechaFin);
+        }
 
-    $fechaInicio = $request->get('fecha_inicio');
-    $fechaFin = $request->get('fecha_fin');
+        $tickets = $query->paginate(7);
 
-    $states = State::pluck('name','id');
-    $items = Item::pluck('name','id');
+        // Contadores
+        $cantidad = 'Total emitidos   ' . Ticket::count() . '______   ';
+        $finalizado = 'Total finalizados    ' . Ticket::where('state_id', 2)->count() . '    ';
 
-    // Construcción dinámica de la query
-    $query = Ticket::with(['state', 'item'])->orderBy('id', 'DESC');
-
-    if ($search) {
-        $query->where('id', 'like', '%' . $search . '%'); // asegurate de usar el campo correcto
-    }
- 
-    if (!empty($estados)) {
-        $query->whereHas('state', function ($q) use ($estados) {
-            $q->whereIn('name', $estados);
-        });
-    }
-    if ($fechaInicio && $fechaFin) {
-        $query->whereBetween('admission', [$fechaInicio, $fechaFin]);
-    } elseif ($fechaInicio) {
-        $query->whereDate('admission', '>=', $fechaInicio);
-    } elseif ($fechaFin) {
-        $query->whereDate('admission', '<=', $fechaFin);
-    }
-
-
-    $tickets = $query->paginate(7);
-
-    // Contadores
-    $cantidad = 'Total emitidos   ' . Ticket::count() . '______   ';
-    $finalizado = 'Total finalizados    ' . Ticket::where('state_id', 2)->count() . '    ';
-
-    return view('ticket.index', compact('states','tickets','items','cantidad','finalizado'))
-        ->with('i', (request()->input('page', 1) - 1) * $tickets->perPage());
-} 
+        return view('ticket.index', compact('states','tickets','items','cantidad','finalizado'))
+            ->with('i', (request()->input('page', 1) - 1) * $tickets->perPage());
+    } 
 
     /**
      * Show the form for creating a new resource.
@@ -167,51 +166,55 @@ class TicketController extends Controller
         return redirect()->route('binnacles.index');
     }
     
-/*
-public function exportTicketsPDF()
-{
-    $tickets = Ticket::all(); // Podés aplicar filtros si querés
+    public function exportTicketsPDF()
+    {
+       
+        $query = Ticket::query();
 
-    $pdf = new TCPDF();
-    $pdf->SetCreator(PDF_CREATOR);
-    $pdf->SetAuthor('Tu Proyecto Laravel');
-    $pdf->SetTitle('Listado de Tickets');
-    $pdf->SetMargins(10, 10, 10);
-    $pdf->AddPage();
-    $pdf->SetFont('helvetica', '', 12);
+        // Filtrar por estado
+        if ($estados = request()->get('estado')) {
+            $query->whereIn('state_id', function ($subquery) use ($estados) {
+                $subquery->select('id')
+                    ->from('states')
+                    ->whereIn('name', $estados);
+            });
+        }
 
-    $content = "<h1>Listado de Tickets</h1><br>";
+        // Filtrar por fecha
+        if ($inicio = request('fecha_inicio')) {
+            $query->whereDate('admission', '>=', $inicio);
+        }
+        if ($fin = request('fecha_fin')) {
+            $query->whereDate('admission', '<=', $fin);
+        }
 
-    foreach ($tickets as $ticket) {
-        $content .= "<strong>ID:</strong> {$ticket->id} <br>";
-        $content .= "<strong>Descripción:</strong> {$ticket->description}<br>";
-        $content .= "<strong>Estado:</strong> {$ticket->status}<br><br>";
+        // Búsqueda por texto
+        if ($search = request('search')) {
+            $query->where('flaw', 'LIKE', "%{$search}%");
+        }
+
+        $tickets = $query->get();
+
+
+
+       
+        $pdf = new \TCPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('helvetica', '', 12);
+
+        $html = view('ticket.index_pdf', compact('tickets'))->render();
+        Log::debug('🧾 Vista renderizada con éxito');
+
+        $pdf->writeHTML($html, true, false, true, false, '');
+
+        // 👉 Guardamos el PDF en memoria temporal
+        $pdfContent = $pdf->Output('tickets.pdf', 'S'); // 'S' = return as string
+
+        Log::debug('📤 PDF generado como cadena');
+
+        // 👉 Ahora devolvemos el PDF como descarga usando stream
+        return Response::streamDownload(function () use ($pdfContent) {
+            echo $pdfContent;
+        }, 'tickets.pdf'); 
     }
-
-    $pdf->writeHTML($content, true, false, true, false, '');
-
-    // Descargar el PDF directamente
-    $pdf->Output('tickets.pdf', 'D');
-}*/
-
-public function exportTicketsPDF()
-{
-    $tickets = Ticket::all(); // O aplicá tus filtros personalizados
-
-    $pdf = new TCPDF();
-    $pdf->SetCreator(PDF_CREATOR);
-    $pdf->SetAuthor('Taller Rapid');
-    $pdf->SetTitle('Listado de Tickets');
-    $pdf->SetMargins(10, 10, 10);
-    $pdf->AddPage();
-    $pdf->SetFont('helvetica', '', 12);
-
-    // 👇 Esta es la parte clave que preguntás
-    $html = view('ticket.index_pdf', ['tickets' => Ticket::all()])->render();
-
-    $pdf->writeHTML($html, true, false, true, false, '');
-
-    $pdf->Output('tickets.pdf', 'D'); // Lo descarga directamente
-}
-
 }
