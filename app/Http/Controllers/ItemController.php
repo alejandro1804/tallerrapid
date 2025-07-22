@@ -6,6 +6,11 @@ use App\Models\Provider;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Laravel\Scout\Searchable;
+use Endroid\QrCode\Builder\Builder;
+use Illuminate\Support\Facades\File;
+use TCPDF;
+
+
 //use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Carbon;
@@ -135,4 +140,93 @@ class ItemController extends Controller
         return redirect()->route('items.index')
             ->with('success', 'Item deleted successfully');
     }
+    /*
+    public function printItemQr($id)   // funcion para imprimir codigo QR
+    {
+       
+       // ✅ Test rápido de acceso a la carpeta storage
+        //dd(File::exists(storage_path('app')));
+        // 🧠 Test para ver si Laravel accede a storage/app correctamente
+    //dd(\Illuminate\Support\Facades\File::exists(storage_path('app')));
+
+
+
+        $item = Item::findOrFail($id);
+
+        // 1. Crear contenido QR
+        $qrCode = Builder::create()
+            ->data("ID: {$item->id}\nNombre: {$item->name}\nMarca: {$item->trademark}")
+            ->size(200)
+            ->margin(10)
+            ->build();
+
+        $filename = 'qr_' . $item->id . '.png';
+        $filePath = storage_path('app/public/' . $filename);
+
+        // 🧪 Guardar imagen
+        File::put($filePath, $qrCode->getString());
+
+        // ✅ Verificar si el archivo existe
+        // dd(File::exists($filePath));
+
+        $qrImage = $qrCode->getDataUri();
+
+        // 2. Generar PDF con TCPDF
+        $pdf = new TCPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->Write(0, "Nombre: {$item->name}");
+
+        // ✅ Mostrar el QR
+        $pdf->Image($filePath, 15, 30, 30, 30);  // X, Y, width, height
+        
+        $pdf->Output("qr_item_{$item->id}.pdf", 'I'); // 'I' lo muestra en pantalla
+    }  */
+
+    public function printItemQr($id)
+    {
+        $item = Item::findOrFail($id);
+
+        // Crear QR con resumen básico
+        $qrCode = \Endroid\QrCode\Builder\Builder::create()
+            ->data("ID: {$item->id}\nNombre: {$item->name}\nSector: {$item->sector->name}\nMarca: {$item->trademark}\nProveedor: {$item->provider->name}\nCaracterísticas: {$item->characteristic}")
+            ->size(200)
+            ->margin(10)
+            ->build();
+
+        $filename = 'qr_' . $item->id . '.png';
+        $filePath = storage_path('app/public/' . $filename);
+        \Illuminate\Support\Facades\File::put($filePath, $qrCode->getString());
+
+        $pdf = new \TCPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('helvetica', '', 12);
+
+        // Título
+        $pdf->SetFont('helvetica', 'B', 16);
+        $pdf->Write(10, "Ficha Técnica: {$item->name}");
+
+        $pdf->Ln(8); // Espacio
+
+        // Detalles del ítem
+        $pdf->SetFont('helvetica', '', 12);
+        $pdf->Write(6, "Sector: {$item->sector->name}");
+        $pdf->Ln(6);
+        $pdf->Write(6, "Proveedor: {$item->provider->name}");
+        $pdf->Ln(6);
+        $pdf->Write(6, "Marca: {$item->trademark}");
+        $pdf->Ln(6);
+        $pdf->Write(6, "Características: {$item->characteristic}");
+        $pdf->Ln(6);
+        $pdf->Write(6, "Nota: {$item->note}");
+        $pdf->Ln(10);
+
+        // Imagen del código QR
+        $pdf->Image($filePath, 150, 40, 30, 30); // Posición y tamaño del QR
+
+        \Illuminate\Support\Facades\File::delete($filePath);
+
+        $pdf->Output("Ficha_Item_{$item->id}.pdf", 'I');
+    }
+
 }

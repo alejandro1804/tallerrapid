@@ -2,29 +2,62 @@
     <div class="box-body">
         
         <div class="form-group">
-            {{ Form::label('state') }}
-            {{ Form::select('state_id',$states, $ticket->state_id, ['class' => 'form-control' . ($errors->has('state_id') ? ' is-invalid' : ''), 'placeholder' => 'State']) }}
-            {!! $errors->first('state_id', '<div class="invalid-feedback">:message</div>') !!}
+    <label for="state_id">{{ __('State') }}</label>
+    <select name="state_id" id="state_id" class="form-control{{ $errors->has('state_id') ? ' is-invalid' : '' }}">
+        <option value="">{{ __('State') }}</option>
+        @foreach ($states as $id => $state)
+            <option value="{{ $id }}" {{ old('state_id', $ticket->state_id) == $id ? 'selected' : '' }}>
+                {{ $state }}
+            </option>
+        @endforeach
+    </select>
+    @if ($errors->has('state_id'))
+        <div class="invalid-feedback">
+            {{ $errors->first('state_id') }}
         </div>
-        <div class="form-group">
-            {{ Form::hidden('admission', $ticket->admission, ['class' => 'form-control' ,'placeholder' => 'Admission']) }}
-          
+    @endif
+</div>
+
+<input type="hidden" name="admission" value="{{ $ticket->admission }}">
+
+<div class="form-group">
+    <label for="item_id">{{ __('Item') }}</label>
+    <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}">
+        <option value="">{{ __('Item Id') }}</option>
+        @foreach ($items as $id => $item)
+            <option value="{{ $id }}" {{ old('item_id', $ticket->item_id) == $id ? 'selected' : '' }}>
+                {{ $item }}
+            </option>
+        @endforeach
+    </select>
+    @if ($errors->has('item_id'))
+        <div class="invalid-feedback">
+            {{ $errors->first('item_id') }}
         </div>
-        <div class="form-group">
-            {{ Form::label('item') }}
-            {{ Form::select('item_id',$items, $ticket->item_id, ['class' => 'form-control' . ($errors->has('item_id') ? ' is-invalid' : ''), 'placeholder' => 'Item Id']) }}
-            {!! $errors->first('item_id', '<div class="invalid-feedback">:message</div>') !!}
+    @endif
+</div>
+
+<div class="form-group">
+    <label for="flaw">{{ __('Defecto') }}</label>
+    <input type="text" name="flaw" id="flaw" value="{{ old('flaw', $ticket->flaw) }}"
+        class="form-control{{ $errors->has('flaw') ? ' is-invalid' : '' }}" placeholder="Flaw">
+    @if ($errors->has('flaw'))
+        <div class="invalid-feedback">
+            {{ $errors->first('flaw') }}
         </div>
-        <div class="form-group">
-            {{ Form::label('defecto') }}
-            {{ Form::text('flaw', $ticket->flaw, ['class' => 'form-control' . ($errors->has('flaw') ? ' is-invalid' : ''), 'placeholder' => 'Flaw']) }}
-            {!! $errors->first('flaw', '<div class="invalid-feedback">:message</div>') !!}
+    @endif
+</div>
+
+<div class="form-group">
+    <label for="priority">{{ __('Priority') }}</label>
+    <input type="text" name="priority" id="priority" value="{{ old('priority', $ticket->priority) }}"
+        class="form-control{{ $errors->has('priority') ? ' is-invalid' : '' }}" placeholder="Priority">
+    @if ($errors->has('priority'))
+        <div class="invalid-feedback">
+            {{ $errors->first('priority') }}
         </div>
-        <div class="form-group">
-            {{ Form::label('priority') }}
-            {{ Form::text('priority', $ticket->priority, ['class' => 'form-control' . ($errors->has('priority') ? ' is-invalid' : ''), 'placeholder' => 'Priority']) }}
-            {!! $errors->first('priority', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+    @endif
+</div>
 
     </div>
     <div class="box-footer mt20">

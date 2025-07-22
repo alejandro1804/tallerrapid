@@ -2,10 +2,23 @@
     <div class="box-body">
         
         <div class="form-group">
-            {{ Form::label('name') }}
-            {{ Form::text('name', $position->name, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Name']) }}
-            {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
+    <label for="name">{{ __('Name') }}</label>
+    <input
+        type="text"
+        name="name"
+        id="name"
+        value="{{ old('name', $position->name) }}"
+        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+        placeholder="Name"
+    >
+    @if ($errors->has('name'))
+        <div class="invalid-feedback">
+            {{ $errors->first('name') }}
         </div>
+    @endif
+</div>
+
+
 
     </div>
     <div class="box-footer mt20">

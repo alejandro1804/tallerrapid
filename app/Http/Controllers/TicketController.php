@@ -194,9 +194,6 @@ class TicketController extends Controller
         }
 
         $tickets = $query->get();
-
-
-
        
         $pdf = new \TCPDF();
         $pdf->AddPage();

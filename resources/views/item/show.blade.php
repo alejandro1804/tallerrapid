@@ -15,7 +15,8 @@
                         </div>
                         <div class="float-right">
                             <a class="btn btn-primary" href="{{ route('items.index') }}"> {{ __('Back') }}</a>
-                        </div>
+                             <a class="btn btn-success" href="{{ route('items.qr', $item->id) }}" target="_blank">Imprimir QR</a>
+                            </div>   
                     </div>
 
                     <div class="card-body">

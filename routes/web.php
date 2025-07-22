@@ -40,3 +40,4 @@ Route::resource('binnacles',BinnacleController::class);       //->middleware('Au
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/tickets/export/pdf', [TicketController::class, 'exportTicketsPDF'])->name('tickets.export.pdf');
+Route::get('item/{id}/qr', [ItemController::class, 'printItemQr'])->name('items.qr');

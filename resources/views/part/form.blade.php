@@ -2,25 +2,58 @@
     <div class="box-body">
         
         <div class="form-group">
-            {{ Form::label('item_id') }}
-            {{ Form::select('item_id',$items ,$part->item_id, ['class' => 'form-control' . ($errors->has('item_id') ? ' is-invalid' : ''), 'placeholder' => 'Item Id']) }}
-            {!! $errors->first('item_id', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('name') }}
-            {{ Form::text('name', $part->name, ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'placeholder' => 'Name']) }}
-            {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('note') }}
-            {{ Form::text('note', $part->note, ['class' => 'form-control' . ($errors->has('note') ? ' is-invalid' : ''), 'placeholder' => 'Note']) }}
-            {!! $errors->first('note', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
-        <div class="form-group">
-            {{ Form::label('provider_id') }}
-            {{ Form::select('provider_id',$providers, $part->provider_id,['class' => 'form-control' . ($errors->has('provider_id') ? ' is-invalid' : ''), 'placeholder' => 'Provider Id']) }}
-            {!! $errors->first('provider_id', '<div class="invalid-feedback">:message</div>') !!}
-        </div>
+    <label for="item_id">{{ __('Item Id') }}</label>
+    <select name="item_id" id="item_id"
+        class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}">
+        <option value="">{{ __('Item Id') }}</option>
+        @foreach ($items as $id => $item)
+            <option value="{{ $id }}" {{ old('item_id', $part->item_id) == $id ? 'selected' : '' }}>
+                {{ $item }}
+            </option>
+        @endforeach
+    </select>
+    @if ($errors->has('item_id'))
+        <div class="invalid-feedback">{{ $errors->first('item_id') }}</div>
+    @endif
+</div>
+
+<div class="form-group">
+    <label for="name">{{ __('Name') }}</label>
+    <input type="text" name="name" id="name"
+        value="{{ old('name', $part->name) }}"
+        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+        placeholder="Name">
+    @if ($errors->has('name'))
+        <div class="invalid-feedback">{{ $errors->first('name') }}</div>
+    @endif
+</div>
+
+<div class="form-group">
+    <label for="note">{{ __('Note') }}</label>
+    <input type="text" name="note" id="note"
+        value="{{ old('note', $part->note) }}"
+        class="form-control{{ $errors->has('note') ? ' is-invalid' : '' }}"
+        placeholder="Note">
+    @if ($errors->has('note'))
+        <div class="invalid-feedback">{{ $errors->first('note') }}</div>
+    @endif
+</div>
+
+<div class="form-group">
+    <label for="provider_id">{{ __('Provider Id') }}</label>
+    <select name="provider_id" id="provider_id"
+        class="form-control{{ $errors->has('provider_id') ? ' is-invalid' : '' }}">
+        <option value="">{{ __('Provider Id') }}</option>
+        @foreach ($providers as $id => $provider)
+            <option value="{{ $id }}" {{ old('provider_id', $part->provider_id) == $id ? 'selected' : '' }}>
+                {{ $provider }}
+            </option>
+        @endforeach
+    </select>
+    @if ($errors->has('provider_id'))
+        <div class="invalid-feedback">{{ $errors->first('provider_id') }}</div>
+    @endif
+</div>
 
     </div>
     <div class="box-footer mt20">
