@@ -2,29 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestMail;
 use App\Models\Provider;
 use Illuminate\Http\Request;
-use Laravel\Scout\Searchable;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\TestMail;
+use Laravel\Scout\Searchable;
 
 /**
  * Class ProviderController
- * @package App\Http\Controllers
  */
 class ProviderController extends Controller
 {
     use Searchable;
+
     /**
-     * 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $providers = Provider::search(request('search'))->orderBy('name','ASC')->paginate(7);
-        
+        $providers = Provider::search(request('search'))->orderBy('name', 'ASC')->paginate(7);
+
         return view('provider.index', compact('providers'))
             ->with('i', (request()->input('page', 1) - 1) * $providers->perPage());
     }
@@ -36,29 +35,27 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        $provider = new Provider();
+        $provider = new Provider;
+
         return view('provider.create', compact('provider'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        
-        $enminuscula = strtolower ($request->input('name'));  //pasamtodo a minusculas
-        $primera_en_mayuscula = ucwords ($enminuscula);       //primeras letras de palabras a mayusculas
-        $request->merge(['name'=>$primera_en_mayuscula]);
-        
+
+        $enminuscula = strtolower($request->input('name'));  // pasamtodo a minusculas
+        $primera_en_mayuscula = ucwords($enminuscula);       // primeras letras de palabras a mayusculas
+        $request->merge(['name' => $primera_en_mayuscula]);
+
         request()->validate(Provider::$rules);
         $provider = Provider::create($request->all());
 
-      //  Mail::to("danielabarizo@gmail.com")->send(new TestMail("Daniela")); 
-
-
+        //  Mail::to("danielabarizo@gmail.com")->send(new TestMail("Daniela"));
 
         return redirect()->route('providers.index')
             ->with('success', 'Provider created successfully.');
@@ -67,7 +64,7 @@ class ProviderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -80,7 +77,7 @@ class ProviderController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -93,15 +90,13 @@ class ProviderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Provider $provider
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Provider $provider)
     {
-        $enminuscula = strtolower ($request->input('name'));  //pasamtodo a minusculas
-        $primera_en_mayuscula = ucwords ($enminuscula);       //primeras letras de palabras a mayusculas
-        $request->merge(['name'=>$primera_en_mayuscula]);
+        $enminuscula = strtolower($request->input('name'));  // pasamtodo a minusculas
+        $primera_en_mayuscula = ucwords($enminuscula);       // primeras letras de palabras a mayusculas
+        $request->merge(['name' => $primera_en_mayuscula]);
 
         request()->validate(Provider::$rules);
         $provider->update($request->all());
@@ -111,8 +106,9 @@ class ProviderController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy($id)

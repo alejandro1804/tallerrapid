@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class StateController
- * @package App\Http\Controllers
  */
 class StateController extends Controller
 {
@@ -18,7 +17,7 @@ class StateController extends Controller
      */
     public function index()
     {
-        $states = State::orderBy('name','ASC')->paginate(7);
+        $states = State::orderBy('name', 'ASC')->paginate(7);
 
         return view('state.index', compact('states'))
             ->with('i', (request()->input('page', 1) - 1) * $states->perPage());
@@ -31,14 +30,14 @@ class StateController extends Controller
      */
     public function create()
     {
-        $state = new State();
+        $state = new State;
+
         return view('state.create', compact('state'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,7 +53,7 @@ class StateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -67,7 +66,7 @@ class StateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -80,8 +79,6 @@ class StateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  State $state
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, State $state)
@@ -95,8 +92,9 @@ class StateController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy($id)

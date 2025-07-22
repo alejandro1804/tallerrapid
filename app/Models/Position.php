@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 
-
 /**
  * Class Position
  *
@@ -14,18 +13,18 @@ use Laravel\Scout\Searchable;
  * @property $created_at
  * @property $updated_at
  *
- * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Position extends Model
-{ 
+{
+    use Searchable;
 
-   use Searchable;
-  protected $table = 'positions';
-  protected $primaryKey = 'id'; // Asegúrate de que esto coincida con la columna en la BD
-    
-  static $rules = [
-		'name' => 'required',
+    protected $table = 'positions';
+
+    protected $primaryKey = 'id'; // Asegúrate de que esto coincida con la columna en la BD
+
+    public static $rules = [
+        'name' => 'required',
     ];
 
     protected $perPage = 7;
@@ -39,7 +38,6 @@ class Position extends Model
 
     public function operators()
     {
-        return $this->hasMany('App\Models\Operator', 'operator_id','id');
+        return $this->hasMany('App\Models\Operator', 'operator_id', 'id');
     }
-
 }

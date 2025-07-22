@@ -3,8 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
-
 
 /**
  * Class Sector
@@ -13,16 +11,14 @@ use Laravel\Scout\Searchable;
  * @property $name
  * @property $created_at
  * @property $updated_at
- *
  * @property Item[] $items
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Sector extends Model
 {
-    
-    static $rules = [
-		'name' => 'required',
+    public static $rules = [
+        'name' => 'required',
     ];
 
     protected $perPage = 20;
@@ -34,7 +30,6 @@ class Sector extends Model
      */
     protected $fillable = ['name'];
 
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -42,17 +37,18 @@ class Sector extends Model
     {
         return $this->hasMany('App\Models\Item', 'sector_id', 'id');
     }
+
     public function toSearchableArray(): array
     {
         $array = $this->toArray();
- 
+
         // Customize the data array...
         return [
-            
-           'name' => $this->name
-                    
+
+            'name' => $this->name,
+
         ];
+
         return $array;
     }
-
 }

@@ -1,23 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Sector;
-use App\Models\Provider;
+
 use App\Models\Item;
-use Illuminate\Http\Request;
-use Laravel\Scout\Searchable;
+use App\Models\Provider;
+use App\Models\Sector;
 use Endroid\QrCode\Builder\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use TCPDF;
 
-
-//use Illuminate\Support\Facades\DB;
-
-use Illuminate\Support\Carbon;
+// use Illuminate\Support\Facades\DB;
 
 /**
  * Class ItemController
- * @package App\Http\Controllers
  */
 class ItemController extends Controller
 {
@@ -27,14 +23,14 @@ class ItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {  
-        $sectors = Sector::pluck('name','id');
-        $providers = Provider::pluck('name','id');
-      
-        $items = Item::search(request('search'))->orderBy('name','ASC')->paginate(7);
-                   
-        return view('item.index', compact('items','sectors','providers'))
-            ->with('i', (request()->input('page', 1) - 1) * $items->perPage()); 
+    {
+        $sectors = Sector::pluck('name', 'id');
+        $providers = Provider::pluck('name', 'id');
+
+        $items = Item::search(request('search'))->orderBy('name', 'ASC')->paginate(7);
+
+        return view('item.index', compact('items', 'sectors', 'providers'))
+            ->with('i', (request()->input('page', 1) - 1) * $items->perPage());
     }
 
     /**
@@ -44,82 +40,85 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $providers=Provider::pluck('name','id');
-        $sectors=Sector::pluck('name','id');
-        $item = new Item();
-       
-        return view('item.create', compact('item','sectors','providers'));
+        $providers = Provider::pluck('name', 'id');
+        $sectors = Sector::pluck('name', 'id');
+        $item = new Item;
+
+        return view('item.create', compact('item', 'sectors', 'providers'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $primera_en_mayuscula = ucfirst ($request->input('name'));
-        $request->merge(['name'=>$primera_en_mayuscula]);
+        $primera_en_mayuscula = ucfirst($request->input('name'));
+        $request->merge(['name' => $primera_en_mayuscula]);
         $trademark = $request->input('trademark');
         $caracteristica = $request->input('characteristic');
         $nota = $request->input('note');
 
-        if ($trademark==NULL){   $request->merge(['trademark'=>' no suministrada ']);                   }
+        if ($trademark == null) {
+            $request->merge(['trademark' => ' no suministrada ']);
+        }
 
-        if ($caracteristica==NULL){   $request->merge(['characteristic'=>' sin comentarios ']);        }   
+        if ($caracteristica == null) {
+            $request->merge(['characteristic' => ' sin comentarios ']);
+        }
 
-        if ($nota==NULL){   $request->merge(['note'=>' sin comentarios ']);                              }
+        if ($nota == null) {
+            $request->merge(['note' => ' sin comentarios ']);
+        }
 
         request()->validate(Item::$rules);
 
         $item = Item::create($request->all());
-      
-       return redirect()->route('items.index')
-            ->with('success', 'Item created successfully.'); 
-     }
+
+        return redirect()->route('items.index')
+            ->with('success', 'Item created successfully.');
+    }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
-        $providers=Provider::pluck('name','id');
-        $sectors=Sector::pluck('name','id');
+    {
+        $providers = Provider::pluck('name', 'id');
+        $sectors = Sector::pluck('name', 'id');
         $item = Item::find($id);
 
-        return view('item.show', compact('item','sectors','providers'));
+        return view('item.show', compact('item', 'sectors', 'providers'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $providers=Provider::pluck('name','id');
-        $sectors=Sector::pluck('name','id');
+        $providers = Provider::pluck('name', 'id');
+        $sectors = Sector::pluck('name', 'id');
         $item = Item::find($id);
 
-        return view('item.edit', compact('item','sectors','providers'));
+        return view('item.edit', compact('item', 'sectors', 'providers'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Item $item
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Item $item)
     {
-        $primera_en_mayuscula = ucfirst ($request->input('name'));
-        $request->merge(['name'=>$primera_en_mayuscula]);
+        $primera_en_mayuscula = ucfirst($request->input('name'));
+        $request->merge(['name' => $primera_en_mayuscula]);
         request()->validate(Item::$rules);
 
         $item->update($request->all());
@@ -129,8 +128,9 @@ class ItemController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy($id)
@@ -143,7 +143,7 @@ class ItemController extends Controller
     /*
     public function printItemQr($id)   // funcion para imprimir codigo QR
     {
-       
+
        // ✅ Test rápido de acceso a la carpeta storage
         //dd(File::exists(storage_path('app')));
         // 🧠 Test para ver si Laravel accede a storage/app correctamente
@@ -179,7 +179,7 @@ class ItemController extends Controller
 
         // ✅ Mostrar el QR
         $pdf->Image($filePath, 15, 30, 30, 30);  // X, Y, width, height
-        
+
         $pdf->Output("qr_item_{$item->id}.pdf", 'I'); // 'I' lo muestra en pantalla
     }  */
 
@@ -194,11 +194,11 @@ class ItemController extends Controller
             ->margin(10)
             ->build();
 
-        $filename = 'qr_' . $item->id . '.png';
-        $filePath = storage_path('app/public/' . $filename);
+        $filename = 'qr_'.$item->id.'.png';
+        $filePath = storage_path('app/public/'.$filename);
         \Illuminate\Support\Facades\File::put($filePath, $qrCode->getString());
 
-        $pdf = new \TCPDF();
+        $pdf = new \TCPDF;
         $pdf->AddPage();
         $pdf->SetFont('helvetica', '', 12);
 
@@ -228,5 +228,4 @@ class ItemController extends Controller
 
         $pdf->Output("Ficha_Item_{$item->id}.pdf", 'I');
     }
-
 }

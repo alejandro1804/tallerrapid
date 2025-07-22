@@ -14,21 +14,20 @@ use Laravel\Scout\Searchable;
  * @property $status
  * @property $created_at
  * @property $updated_at
- *
  * @property Binnacle[] $binnacles
  * @property Team[] $teams
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Operator extends Model
 {
     use Searchable;
-    
-    static $rules = [
-		'name' => 'required',
-		'position_id' => 'required',
+
+    public static $rules = [
+        'name' => 'required',
+        'position_id' => 'required',
         'phone' => 'numeric|required',
-		'status' => 'nullable',
+        'status' => 'nullable',
     ];
 
     protected $perPage = 7;
@@ -38,8 +37,7 @@ class Operator extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','position_id','phone','status'];
-
+    protected $fillable = ['name', 'position_id', 'phone', 'status'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -48,25 +46,24 @@ class Operator extends Model
     {
         return $this->hasMany('App\Models\Binnacle', 'id', 'operator_id');
     }
-    
-       public function position()
+
+    public function position()
     {
-       // return $this->belongsTo('App\Models\Position', 'id', 'position_id');
+        // return $this->belongsTo('App\Models\Position', 'id', 'position_id');
         return $this->belongsTo(Position::class, 'position_id');
     }
 
-
-   
     public function toSearchableArray(): array
     {
         $array = $this->toArray();
- 
+
         // Customize the data array...
         return [
-            
+
             'name' => $this->name,
             'status' => $this->status,
         ];
+
         return $array;
     }
 }

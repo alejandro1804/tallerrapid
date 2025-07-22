@@ -16,21 +16,21 @@ use Laravel\Scout\Searchable;
  * @property $country
  * @property $created_at
  * @property $updated_at
- *
  * @property Item[] $items
  * @property Part[] $parts
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Provider extends Model
 {
     use Searchable;
-    static $rules = [
-		'name' => 'required',
-		'phone' => 'required',
-		'adress' => 'required',
-		'location' => 'required',
-		'country' => 'required',
+
+    public static $rules = [
+        'name' => 'required',
+        'phone' => 'required',
+        'adress' => 'required',
+        'location' => 'required',
+        'country' => 'required',
     ];
 
     protected $perPage = 20;
@@ -40,8 +40,7 @@ class Provider extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','phone','adress','location','country'];
-
+    protected $fillable = ['name', 'phone', 'adress', 'location', 'country'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -50,7 +49,7 @@ class Provider extends Model
     {
         return $this->hasMany('App\Models\Item', 'provider_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -58,18 +57,19 @@ class Provider extends Model
     {
         return $this->hasMany('App\Models\Part', 'provider_id', 'id');
     }
+
     public function toSearchableArray(): array
     {
         $array = $this->toArray();
- 
+
         // Customize the data array...
         return [
-            
+
             'name' => $this->name,
-            'adress' =>$this->adress,          
-            
+            'adress' => $this->adress,
+
         ];
+
         return $array;
     }
-
 }

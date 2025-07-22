@@ -12,14 +12,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property $created_at
  * @property $updated_at
  *
- * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class State extends Model
 {
-    
-    static $rules = [
-		'name' => 'required',
+    public static $rules = [
+        'name' => 'required',
     ];
 
     protected $perPage = 20;
@@ -30,7 +28,4 @@ class State extends Model
      * @var array
      */
     protected $fillable = ['name'];
-
-
-
 }

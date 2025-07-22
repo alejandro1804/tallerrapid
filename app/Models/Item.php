@@ -17,24 +17,24 @@ use Laravel\Scout\Searchable;
  * @property $provider_id
  * @property $created_at
  * @property $updated_at
- *
  * @property Part[] $parts
  * @property Provider $provider
  * @property Sector $sector
  * @property Ticket[] $tickets
- * @package App
+ *
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
 class Item extends Model
 {
     use Searchable;
-    static $rules = [
-		'name' => 'required',
-		'sector_id' => 'required',
-		'characteristic' => '',
-		'note' => '',
-		'trademark' =>'',
-		'provider_id' => 'required',
+
+    public static $rules = [
+        'name' => 'required',
+        'sector_id' => 'required',
+        'characteristic' => '',
+        'note' => '',
+        'trademark' => '',
+        'provider_id' => 'required',
     ];
 
     protected $perPage = 20;
@@ -44,8 +44,7 @@ class Item extends Model
      *
      * @var array
      */
-    protected $fillable = ['name','sector_id','characteristic','note','trademark','provider_id'];
-
+    protected $fillable = ['name', 'sector_id', 'characteristic', 'note', 'trademark', 'provider_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -54,7 +53,7 @@ class Item extends Model
     {
         return $this->hasMany('App\Models\Part', 'item_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -62,7 +61,7 @@ class Item extends Model
     {
         return $this->hasOne('App\Models\Provider', 'id', 'provider_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -70,7 +69,7 @@ class Item extends Model
     {
         return $this->hasOne('App\Models\Sector', 'id', 'sector_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -78,19 +77,19 @@ class Item extends Model
     {
         return $this->hasMany('App\Models\Ticket', 'item_id', 'id');
     }
+
     public function toSearchableArray(): array
     {
         $array = $this->toArray();
- 
+
         // Customize the data array...
         return [
-            
-                'name' => $this->name,
-                'trademark' => $this->trademark,
-                
+
+            'name' => $this->name,
+            'trademark' => $this->trademark,
+
         ];
-        
+
         return $array;
     }
-
 }

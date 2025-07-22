@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 /**
  * Class PositionController
- * @package App\Http\Controllers
  */
 class PositionController extends Controller
 {
@@ -18,8 +17,8 @@ class PositionController extends Controller
      */
     public function index()
     {
-       // $positions = Position::paginate();
-        $positions = Position::orderBy('name','ASC')->paginate(7);
+        // $positions = Position::paginate();
+        $positions = Position::orderBy('name', 'ASC')->paginate(7);
 
         return view('position.index', compact('positions'))
             ->with('i', (request()->input('page', 1) - 1) * $positions->perPage());
@@ -32,21 +31,21 @@ class PositionController extends Controller
      */
     public function create()
     {
-     
-        $position = new Position();
+
+        $position = new Position;
+
         return view('position.create', compact('position'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $enmayuscula = strtoupper ($request->input('name'));  //pasamtodo a minusculasmayusculas
-        $request->merge(['name'=>$enmayuscula]);
+        $enmayuscula = strtoupper($request->input('name'));  // pasamtodo a minusculasmayusculas
+        $request->merge(['name' => $enmayuscula]);
         request()->validate(Position::$rules);
 
         $position = Position::create($request->all());
@@ -58,7 +57,7 @@ class PositionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -71,7 +70,7 @@ class PositionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -84,14 +83,12 @@ class PositionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  Position $position
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Position $position)
     {
-        $enmayuscula = strtoupper ($request->input('name'));  //pasamtodo a minusculasmayusculas
-        $request->merge(['name'=>$enmayuscula]);
+        $enmayuscula = strtoupper($request->input('name'));  // pasamtodo a minusculasmayusculas
+        $request->merge(['name' => $enmayuscula]);
         request()->validate(Position::$rules);
 
         $position->update($request->all());
@@ -101,8 +98,9 @@ class PositionController extends Controller
     }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy($id)
