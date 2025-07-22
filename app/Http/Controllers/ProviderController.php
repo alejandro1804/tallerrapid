@@ -100,7 +100,7 @@ class ProviderController extends Controller
 
         request()->validate(Provider::$rules);
         $provider->update($request->all());
-
+        
         return redirect()->route('providers.index')
             ->with('success', 'Provider updated successfully');
     }
