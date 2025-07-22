@@ -10,6 +10,7 @@ use App\Http\Controllers\SectorController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 --------------------------------------------------------------------
