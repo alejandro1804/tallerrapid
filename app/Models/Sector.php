@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sector extends Model
 {
     public static $rules = [
-        'name' => 'required',
+        'name' => 'require|dunique:sectors,name',
     ];
 
     protected $perPage = 20;

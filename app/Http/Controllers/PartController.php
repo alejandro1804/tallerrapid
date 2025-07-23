@@ -40,8 +40,8 @@ class PartController extends Controller
      */
     public function create()
     {
-        $items = Item::pluck('name', 'id');
-        $providers = Provider::pluck('name', 'id');
+        $items = Item::orderBy('name')->pluck('name', 'id');
+        $providers = Provider::orderBy('name')->pluck('name', 'id');
         $part = new Part;
 
         return view('part.create', compact('part', 'providers', 'items'));
@@ -90,8 +90,8 @@ class PartController extends Controller
      */
     public function edit($id)
     {
-        $items = Item::pluck('name', 'id');
-        $providers = Provider::pluck('name', 'id');
+        $items = Item::orderBy('name')->pluck('name', 'id');
+        $providers = Provider::orderBy('name')->pluck('name', 'id');
         $part = Part::find($id);
 
         return view('part.edit', compact('part', 'providers', 'items'));

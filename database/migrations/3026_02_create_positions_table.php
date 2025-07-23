@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('positions', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->smallInteger('id')->autoIncrement()->unsigned()->primary();
+            $table->string('name',30);
             $table->timestamps();
         });
     }

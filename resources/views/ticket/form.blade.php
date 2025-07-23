@@ -4,7 +4,7 @@
         <div class="form-group">
     <label for="state_id">{{ __('State') }}</label>
     <select name="state_id" id="state_id" class="form-control{{ $errors->has('state_id') ? ' is-invalid' : '' }}">
-        <option value="">{{ __('State') }}</option>
+        <option value="">{{ __('') }}</option>
         @foreach ($states as $id => $state)
             <option value="{{ $id }}" {{ old('state_id', $ticket->state_id) == $id ? 'selected' : '' }}>
                 {{ $state }}
@@ -23,7 +23,7 @@
 <div class="form-group">
     <label for="item_id">{{ __('Item') }}</label>
     <select name="item_id" id="item_id" class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}">
-        <option value="">{{ __('Item Id') }}</option>
+        <option value="">{{ __('') }}</option>
         @foreach ($items as $id => $item)
             <option value="{{ $id }}" {{ old('item_id', $ticket->item_id) == $id ? 'selected' : '' }}>
                 {{ $item }}

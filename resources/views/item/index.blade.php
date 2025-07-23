@@ -44,7 +44,6 @@
                                     <tr>
                                         <th>Name</th>
 										<th>Sector </th>
-										<th>Characteristic</th>
 										<th>Trademark</th>
 										<th>Provider </th>
 
@@ -67,7 +66,6 @@
                                             
                                           	<td>{{ $item->name }}</td>
 											<td>{{ $item->sector->name }}</td>
-											<td>{{ $item->characteristic }}</td>
 											<td>{{ $item->trademark }}</td>
 											<td>{{ $item->provider->name }}</td>
                                             <td>

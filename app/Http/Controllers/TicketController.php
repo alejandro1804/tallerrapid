@@ -68,7 +68,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        $states = State::pluck('name', 'id');
+        $states = State::orderBy('name')->pluck('name', 'id');
         $items = Item::pluck('name', 'id');
         $ticket = new Ticket;
 

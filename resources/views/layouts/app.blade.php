@@ -32,8 +32,8 @@
                             <x-nav-card route="states.index" label="Estados" />
                             <x-nav-card route="positions.index" label="Oficios" />
                         </div>
-                                        </div> <!-- cierre de div.d-flex (logo + menú) -->
-
+                </div> <!-- cierre de div.d-flex (logo + menú) -->
+                @endauth
                 <div class="collapse navbar-collapse mt-2 mt-md-0" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         @guest
@@ -80,4 +80,4 @@
     </div>
 </body>
 </html>
-                    @endauth
+                    

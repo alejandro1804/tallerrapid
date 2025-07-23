@@ -24,7 +24,7 @@ class Operator extends Model
     use Searchable;
 
     public static $rules = [
-        'name' => 'required',
+        'name' => 'required|unique:operators,name',
         'position_id' => 'required',
         'phone' => 'numeric|required',
         'status' => 'nullable',

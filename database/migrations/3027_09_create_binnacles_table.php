@@ -12,9 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('binnacles', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
-            $table->foreignId('operator_id')->constained();
+            $table->mediumInteger('id')->autoIncrement()->unsigned()->primary();
+
+            $table->unsignedMediumInteger('ticket_id');   
+            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
+
+            $table->unsignedSmallInteger('operator_id');
+            $table->foreign('operator_id')->references('id')->on('operators')->onDelete('cascade');
+            
             $table->string('note');
             $table->timestamps();
         });

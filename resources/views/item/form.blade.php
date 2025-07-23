@@ -16,7 +16,7 @@
     <label for="sector_id">{{ __('Sector Id') }}</label>
     <select name="sector_id" id="sector_id"
         class="form-control{{ $errors->has('sector_id') ? ' is-invalid' : '' }}">
-        <option value="">{{ __('Sector Id') }}</option>
+        <option value="">{{ __('') }}</option>
         @foreach ($sectors as $id => $sector)
             <option value="{{ $id }}" {{ old('sector_id', $item->sector_id) == $id ? 'selected' : '' }}>
                 {{ $sector }}
@@ -40,7 +40,7 @@
 </div>
 
 <div class="form-group">
-    <label for="note">{{ __('Note') }}</label>
+    <label for="note">{{ __('note') }}</label>
     <input type="text" name="note" id="note"
         value="{{ old('note', $item->note) }}"
         class="form-control{{ $errors->has('note') ? ' is-invalid' : '' }}"
@@ -65,13 +65,14 @@
     <label for="provider_id">{{ __('Provider Id') }}</label>
     <select name="provider_id" id="provider_id"
         class="form-control{{ $errors->has('provider_id') ? ' is-invalid' : '' }}">
-        <option value="">{{ __('Provider Id') }}</option>
+        <option value="">{{ __('') }}</option>
         @foreach ($providers as $id => $provider)
             <option value="{{ $id }}" {{ old('provider_id', $item->provider_id) == $id ? 'selected' : '' }}>
                 {{ $provider }}
             </option>
         @endforeach
     </select>
+
     @if ($errors->has('provider_id'))
         <div class="invalid-feedback">{{ $errors->first('provider_id') }}</div>
     @endif

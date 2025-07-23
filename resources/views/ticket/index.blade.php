@@ -73,7 +73,6 @@
                                         <th>State</th>
 										<th>Admission</th>
 										<th>Item </th>
-										<th>Flaw</th>
 										<th>Priority</th>
                                         <th></th>
                                     </tr>
@@ -94,7 +93,6 @@
 											<td>{{ $ticket->state->name }}</td>
 											<td>{{ $ticket->admission }}</td>
 											<td>{{ $ticket->item->name }}</td>
-											<td>{{ $ticket->flaw }}</td>
 											<td>{{ $ticket->priority }}</td>
 
                                             <td>

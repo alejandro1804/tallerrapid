@@ -12,10 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tickets', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('state_id')->constrained();
+            $table->mediumInteger('id')->autoIncrement()->unsigned()->primary();
+
+            $table->unsignedSmallInteger('state_id');
+            $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
+
             $table->timestamp('admission');
-            $table->foreignId('item_id')->constrained();
+
+            $table->unsignedSmallInteger('item_id');  
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            
             $table->string('flaw');
             $table->integer('priority');
             $table->timestamps();

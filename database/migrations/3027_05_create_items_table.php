@@ -12,13 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id();
+            $table->smallInteger('id')->autoIncrement()->unsigned()->primary();
             $table->string('name');
-            $table->foreignId('sector_id')->constrained();
+
+            $table->unsignedSmallInteger('sector_id');
+            $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('cascade');
+            
             $table->string('characteristic');
             $table->string('note');
-            $table->string('trademark');
-            $table->foreignId('provider_id')->constrained();
+            $table->string('trademark',40);
+            
+            $table->unsignedSmallInteger('provider_id');
+            $table->foreign('provider_id')->references('id')->on('providers')->onDelete('cascade');
 
             $table->timestamps();
         });

@@ -15,6 +15,9 @@ class PositionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+ 
     public function index()
     {
         // $positions = Position::paginate();
@@ -23,6 +26,8 @@ class PositionController extends Controller
         return view('position.index', compact('positions'))
             ->with('i', (request()->input('page', 1) - 1) * $positions->perPage());
     }
+
+  
 
     /**
      * Show the form for creating a new resource.
@@ -47,7 +52,7 @@ class PositionController extends Controller
         $enmayuscula = strtoupper($request->input('name'));  // pasamtodo a minusculasmayusculas
         $request->merge(['name' => $enmayuscula]);
         request()->validate(Position::$rules);
-
+      
         $position = Position::create($request->all());
 
         return redirect()->route('positions.index')

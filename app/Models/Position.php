@@ -24,7 +24,7 @@ class Position extends Model
     protected $primaryKey = 'id'; // Asegúrate de que esto coincida con la columna en la BD
 
     public static $rules = [
-        'name' => 'required',
+        'name' => 'required|unique:positions,name',
     ];
 
     protected $perPage = 7;

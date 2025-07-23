@@ -12,11 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('operators', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('position_id')->constrained();
-            $table->string('phone');
-            $table->string('status');
+            $table->smallInteger('id')->autoIncrement()->unsigned()->primary();
+            $table->string('name',80);
+
+            $table->unsignedSmallInteger('position_id');
+            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
+            
+            $table->string('phone',20);
+            $table->string('status',15);
             $table->timestamps();
         });
     }

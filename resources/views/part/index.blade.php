@@ -45,7 +45,6 @@
                                      	<th>Nro Equipo </th>
                                         <th>Equipo o Maquina </th>
 										<th>Parte</th>
-										<th>Note</th>
 										<th>Provider </th>
                                         <th></th>
                                     </tr>
@@ -63,7 +62,6 @@
                                         	<td>{{ $part->item_id }}</td>
                                             <td>{{ $part->item->name }}</td>
 											<td>{{ $part->name }}</td>
-											<td>{{ $part->note }}</td>
 											<td>{{ $part->provider->name }}</td>
 
                                             <td>

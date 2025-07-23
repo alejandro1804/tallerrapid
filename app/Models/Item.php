@@ -29,7 +29,7 @@ class Item extends Model
     use Searchable;
 
     public static $rules = [
-        'name' => 'required',
+        'name' => 'required|unique:items,name',
         'sector_id' => 'required',
         'characteristic' => '',
         'note' => '',

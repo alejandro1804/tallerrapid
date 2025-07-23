@@ -26,7 +26,7 @@ class Part extends Model
 
     public static $rules = [
         'item_id' => 'required|exists:items,id',
-        'name' => 'required',
+        'name' => 'required|unique:parts,name',
         'note' => 'nullable',
         'provider_id' => 'required',
     ];

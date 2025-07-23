@@ -40,8 +40,10 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $providers = Provider::pluck('name', 'id');
-        $sectors = Sector::pluck('name', 'id');
+        $providers = Provider::orderBy('name')->pluck('name', 'id');
+        $sectors = Sector::orderBy('name')->pluck('name', 'id');
+
+
         $item = new Item;
 
         return view('item.create', compact('item', 'sectors', 'providers'));
@@ -103,8 +105,8 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        $providers = Provider::pluck('name', 'id');
-        $sectors = Sector::pluck('name', 'id');
+        $providers = Provider::orderBy('name')->pluck('name', 'id');
+        $sectors = Sector::orderBy('name')->pluck('name', 'id');
         $item = Item::find($id);
 
         return view('item.edit', compact('item', 'sectors', 'providers'));

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sectors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+            $table->smallInteger('id')->autoIncrement()->unsigned()->primary();
+            $table->string('name',100);
             $table->timestamps();
         });
     }

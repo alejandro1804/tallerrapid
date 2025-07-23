@@ -5,7 +5,7 @@
     <label for="item_id">{{ __('Item Id') }}</label>
     <select name="item_id" id="item_id"
         class="form-control{{ $errors->has('item_id') ? ' is-invalid' : '' }}">
-        <option value="">{{ __('Item Id') }}</option>
+        <option value="">{{ __('') }}</option>
         @foreach ($items as $id => $item)
             <option value="{{ $id }}" {{ old('item_id', $part->item_id) == $id ? 'selected' : '' }}>
                 {{ $item }}
@@ -43,7 +43,7 @@
     <label for="provider_id">{{ __('Provider Id') }}</label>
     <select name="provider_id" id="provider_id"
         class="form-control{{ $errors->has('provider_id') ? ' is-invalid' : '' }}">
-        <option value="">{{ __('Provider Id') }}</option>
+        <option value="">{{ __('') }}</option>
         @foreach ($providers as $id => $provider)
             <option value="{{ $id }}" {{ old('provider_id', $part->provider_id) == $id ? 'selected' : '' }}>
                 {{ $provider }}

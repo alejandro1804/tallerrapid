@@ -35,7 +35,7 @@ class OperatorController extends Controller
      */
     public function create()
     {
-        $positions = Position::pluck('name', 'id');
+        $positions = Position::orderBy('name')->pluck('name', 'id');
         $operator = new Operator;
 
         return view('operator.create', compact('operator', 'positions'));
@@ -81,7 +81,8 @@ class OperatorController extends Controller
      */
     public function edit($id)
     {
-        $positions = Position::pluck('name', 'id');
+       
+        $positions = Position::orderBy('name')->pluck('name', 'id');
         $operator = Operator::find($id);
 
         return view('operator.edit', compact('operator', 'positions'));

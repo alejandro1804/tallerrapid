@@ -16,7 +16,7 @@
     <label for="position_id">{{ __('Position') }}</label>
     <select name="position_id" id="position_id"
         class="form-control{{ $errors->has('position') ? ' is-invalid' : '' }}">
-        <option value="">{{ __('Position') }}</option>
+        <option value="">{{ __('') }}</option>
         @foreach ($positions as $id => $position)
             <option value="{{ $id }}" {{ old('position_id', $operator->position_id) == $id ? 'selected' : '' }}>
                 {{ $position }}

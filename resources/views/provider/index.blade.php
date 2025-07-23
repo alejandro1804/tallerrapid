@@ -46,9 +46,7 @@
                                       	<th>Name</th>
 										<th>Phone</th>
 										<th>Adress</th>
-										<th>Location</th>
-										<th>Country</th>
-                                        <th></th>
+										<th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,9 +62,7 @@
                                            	<td>{{ $provider->name }}</td>
 											<td>{{ $provider->phone }}</td>
 											<td>{{ $provider->adress }}</td>
-											<td>{{ $provider->location }}</td>
-											<td>{{ $provider->country }}</td>
-
+											
                                             <td>
                                                 <form action="{{ route('providers.destroy',$provider->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('providers.show',$provider->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
