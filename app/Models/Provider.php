@@ -26,7 +26,7 @@ class Provider extends Model
     use Searchable;
 
     public static $rules = [
-        'name' => 'requiredunique:providers,name',
+        'name' => 'required|unique:providers,name',
         'phone' => 'required',
         'adress' => 'required',
         'location' => 'required',

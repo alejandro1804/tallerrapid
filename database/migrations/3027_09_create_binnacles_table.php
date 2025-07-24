@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
 
             $table->unsignedSmallInteger('operator_id');
-            $table->foreign('operator_id')->references('id')->on('operators')->onDelete('cascade');
+            $table->foreign('operator_id')->references('id')->on('operators');
             
             $table->string('note');
             $table->timestamps();

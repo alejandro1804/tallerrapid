@@ -15,6 +15,7 @@ return new class extends Migration
             $table->smallInteger('id')->autoIncrement()->unsigned()->primary();
             $table->string('name',25);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
